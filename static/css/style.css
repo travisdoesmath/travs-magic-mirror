@@ -1,0 +1,158 @@
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    background-color: black;
+    color: white;
+    padding: 0;
+    margin: 0;
+    font-size: 30px;
+    position: absolute;
+}
+
+#main {
+    height: 800px;
+    width: 480px;
+    max-height: 800px;
+    overflow: hidden;
+    /* border: 1px dashed white; */
+}
+
+p {
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-size: 72px;
+    margin: 0;
+    padding: 0;
+}
+
+#date {
+    font-size: 36px;
+}
+
+#sunrise-sunset {
+    position: relative;
+    top: -16px;
+    font-size: 24px;
+}
+
+#sunrise-sunset > img {
+    position: relative;
+    top: 14px;
+}
+
+#sunrise-sunset > svg {
+    position: relative;
+    top: 7px;
+    margin-left: 12px;
+}
+
+
+#time {
+    font-size: 64px;
+}
+
+#news {
+    position: absolute;
+    top: 500px;
+    font-size:24px;
+    /* opacity: 0; */
+    /* transition: opacity 750ms ease-in-out; */
+}
+
+/* #news.is-visible {
+    opacity: 1;
+    transition: opacity 750ms ease-in-out;
+} 
+*/
+
+#news img {
+    width: 220px;
+    float: left;
+    margin: 0 15px 15px 0;
+}
+
+
+
+#news img::before {
+    width: 220px;
+    height: 150px;
+    background-image: url('/static/img/news.png');
+}
+
+#milky-way {
+    position: absolute;
+    top: 700px;
+}
+
+#weather {
+    position: absolute;
+    display: flex;
+    right: 0px;
+    top: 0px;
+    height: 150px;
+    width: 150px;
+    align-items: center;
+    justify-content: center;
+}
+
+#minute-forecast {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 150px;
+    height: 150px;
+}
+
+#current-temperature {
+    font-size: 50px;
+    position: absolute;
+    top: 32px;
+    left: 42px;
+}
+
+#current-other {
+    position: absolute;
+    bottom: 10px;
+    left:20px;
+}
+
+#humidity {
+    position: absolute;
+    bottom: 17px;
+    font-size:24px;
+    color: #FFF;
+}
+
+#forecast {
+    position:absolute;
+    top: 180px;
+    width: 100%;
+}
+
+#austin-current {
+    position:absolute;
+    top: 310px;
+    width: 100%;
+}
+
+#austin-current>img {
+    position:relative;
+    top:15px;
+}
+
+.forecast-description {
+    position: absolute;
+    left: 120px;
+}
+
+.weekday {
+    position: absolute;
+}
+
+.forecast>img {
+    position: relative; 
+    left: 85px;
+    top: 5px;
+}
