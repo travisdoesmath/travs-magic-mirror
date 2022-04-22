@@ -27,11 +27,40 @@ def news():
             response = json.load(f)
             return response
     else:
+
+        delta = timedelta(days=1)
         try:
-            response = requests.get(f'https://newsapi.org/v2/top-headlines?country=us&apiKey={news_api_key}').json()
-            return response
+            cutoff = datetime.utcnow() - delta
+            mtime = datetime.utcfromtimestamp(os.path.getmtime('pollen.json'))
+            if mtime < cutoff:
+                try:
+                    news_data = requests.get(f'https://newsapi.org/v2/top-headlines?country=us&apiKey={news_api_key}').json()
+                    if news_data['code'] == 'rateLimited':
+                        with open('news.json', 'r') as f:
+                            news_data = json.load(f)
+
+                except:
+                    return "an error occured"
+
+                with open('news.json', 'w') as f:
+                    json.dump(news_data, f)
+            else:
+                with open('news.json', 'r') as f:
+                    news_data = json.load(f)
         except:
-            return "an error occured"
+            try:
+                news_data = requests.get(f'https://newsapi.org/v2/top-headlines?country=us&apiKey={news_api_key}').json()
+                if news_data['code'] == 'rateLimited':
+                    with open('news.json', 'r') as f:
+                        news_data = json.load(f)
+            except:
+                return "an error occured"
+            print(news_data)
+            with open('news.json', 'w') as f:
+                json.dump(news_data, f)
+
+        return news_data
+
 
 @app.route('/weather')
 def weather():

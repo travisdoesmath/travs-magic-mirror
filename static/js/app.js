@@ -402,7 +402,7 @@ function updatePollen() {
         console.log('pollen data', data)
 
         let width = 400
-        let height = 180
+        let height = 250
 
         let x = d3.scaleLinear()
             .domain([0, 1000])

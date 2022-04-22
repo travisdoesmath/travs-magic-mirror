@@ -55,8 +55,8 @@ h1 {
 
 #news {
     position: absolute;
-    top: 500px;
-    font-size:24px;
+    top: 680px;
+    font-size:20px;
     /* opacity: 0; */
     /* transition: opacity 750ms ease-in-out; */
 }
@@ -68,7 +68,7 @@ h1 {
 */
 
 #news img {
-    width: 220px;
+    width: 165px;
     float: left;
     margin: 0 15px 15px 0;
 }
@@ -76,8 +76,8 @@ h1 {
 
 
 #news img::before {
-    width: 220px;
-    height: 150px;
+    width: 165px;
+    height: 100px;
     background-image: url('/static/img/news.png');
 }
 
@@ -85,12 +85,12 @@ h1 {
     position: absolute;
     top: 300px;
     width: 480px;
-    height: 500px;
+    height: 250px;
 }
 
 #milky-way {
     position: absolute;
-    top: 700px;
+    top: 560px;
 }
 
 #weather {
