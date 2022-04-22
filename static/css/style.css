@@ -81,6 +81,13 @@ h1 {
     background-image: url('/static/img/news.png');
 }
 
+#pollen {
+    position: absolute;
+    top: 300px;
+    width: 480px;
+    height: 500px;
+}
+
 #milky-way {
     position: absolute;
     top: 700px;
@@ -131,17 +138,6 @@ h1 {
     width: 100%;
 }
 
-#austin-current {
-    position:absolute;
-    top: 310px;
-    width: 100%;
-}
-
-#austin-current>img {
-    position:relative;
-    top:15px;
-}
-
 .forecast-description {
     position: absolute;
     left: 120px;
@@ -156,3 +152,4 @@ h1 {
     left: 85px;
     top: 2px;
 }
+

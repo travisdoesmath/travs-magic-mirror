@@ -1,7 +1,10 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify
 import requests
 import json
 import os
+import re
+from collections import defaultdict
+from datetime import datetime, timedelta
 
 debug = False
 
@@ -43,6 +46,67 @@ def weather():
             return response
         except:
             return "an error occured"
+
+@app.route('/pollen')
+def pollen():
+    delta = timedelta(days=1)
+    try:
+        cutoff = datetime.utcnow() - delta
+        mtime = datetime.utcfromtimestamp(os.path.getmtime('pollen.json'))
+        if mtime < cutoff:
+            pollen_data = scrape_pollen()    
+            with open('pollen.json', 'w') as f:
+                json.dump(pollen_data, f)
+        else:
+            with open('pollen.json', 'r') as f:
+                pollen_data = json.load(f)
+    except:
+        pollen_data = scrape_pollen()
+        print(pollen_data)
+        with open('pollen.json', 'w') as f:
+            json.dump(pollen_data, f)
+
+    return jsonify(pollen_data)
+
+def scrape_pollen():
+    def find_json_text(text):
+        started = False
+        bracket_counts = defaultdict(int)
+        for (i, c) in enumerate(text):
+            if not started and c in '()[]{}':
+                started = True
+            if started:
+                for bracket in [
+                    {'open':'(', 'close':')', 'name':'parenthesis'},
+                    {'open':'[', 'close':']', 'name':'parenthesis'},
+                    {'open':'{', 'close':'}', 'name':'parenthesis'},
+                ]:
+                    if c == bracket['open']:
+                        bracket_counts[bracket['name']] += 1
+                    if c == bracket['close']:
+                        bracket_counts[bracket['name']] -= 1
+                        if bracket_counts[bracket['name']] < 0:
+                            raise Exception('Unexpected closing bracket')
+                if sum(bracket_counts.values()) == 0:
+                    return text[:i]
+        return ''
+
+    def parse_factor(text):
+        first_quote_idx = text.find("'")
+        second_quote_idx = text[first_quote_idx+1:].find("'") + first_quote_idx + 1
+        factor = text[first_quote_idx+1:second_quote_idx]
+        value = text[second_quote_idx+1:].split(',')[1]
+        fill_color = re.search('#[0-9A-F]*', text[text.find('fill-color'):]).group(0)
+        return {'factor':factor, 'value':int(value), 'fillColor':fill_color}
+
+    response = requests.get('https://austinpollen.com/')
+    pattern = r'(?<=<script defer>)(.*)(?=</script>)'
+    script_text = re.findall(pattern, response.text, flags=re.DOTALL)[0]
+    pattern = r'(?<=function drawChartindex\(\))(.*)(?<=arrayToDataTable\()(.*)'
+    text = find_json_text(re.findall(pattern, script_text, flags=re.DOTALL)[0][0]).split('\n')
+
+    return [parse_factor(x) for x in text[1:] if x.startswith('            [') and not x.startswith("            ['Factor'")]
+
 
 if __name__ == "__main__":
     debug = True

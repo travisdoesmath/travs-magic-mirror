@@ -168,8 +168,8 @@ function updateWeather() {
 }
 
 function updateMilkyWay() {
-    latitude = 41.8781 
-    longitude = -87.6298 
+    latitude = 30.44422
+    longitude = -97.77187
 
     now = new Date()
     yesterday = new Date()
@@ -221,8 +221,8 @@ function updateMilkyWay() {
 
     let height = 100;
     let width = 480;
-    let galaxyLineRadius = 200
-    let moonDiameter = 6
+    let galaxyLineRadius = 1000
+    let moonDiameter = 12
 
     let margin = {
         top: 0,
@@ -340,7 +340,7 @@ function updateMilkyWay() {
     let moonPositions = []
     let gcPositions = []
 
-    for (let i = 0; i < endTime.valueOf() - startTime.valueOf(); i += (endTime.valueOf() - startTime.valueOf())/75) {
+    for (let i = 0; i < endTime.valueOf() - startTime.valueOf(); i += (endTime.valueOf() - startTime.valueOf())/30) {
         let time = new Date(startTime.valueOf() + i )
         // let position = SunCalc.getGCPosition(time, latitude, longitude)
         let position0 = SunCalc.getStarPosition(time, latitude, longitude, (17 + 47/60 + 58.9/3600), -(28 + 4/60  + 53/3600))
@@ -397,13 +397,55 @@ function updateMilkyWay() {
         .attr('fill', '#222')
 }
 
+function updatePollen() {
+    d3.json('/pollen').then(function(data) {
+        console.log('pollen data', data)
+
+        let width = 400
+        let height = 180
+
+        let x = d3.scaleLinear()
+            .domain([0, 1000])
+            .range([0, width])
+
+        let y = d3.scaleBand()
+            .range([0, height])
+            .domain(data.map(d => d.factor))
+            .padding(0.1)
+        
+
+        let g = d3.select('#pollen').data([0]).append('g')
+            .attr('width', width)
+            .attr('height', height)
+            .attr('transform', 'translate(100,0)')
+
+        let pollenBarChart = g.selectAll('.bar').data(data)
+
+        g.append("g")
+        .call(d3.axisLeft(y))
+            
+        pollenBarChart.enter()
+            .append('rect')
+            .classed('bar', true)
+            .merge(pollenBarChart)
+            .attr('x', x(0))
+            .attr('y', d => y(d.factor))
+            .attr('width', d => x(d.value))
+            .attr('height', y.bandwidth())
+            .attr('fill', d => d.fillColor)
+        
+    })
+}
+
 updateDateTime()
 updateNewsData().then(updateNewsDisplay)
 updateWeather()
 updateMilkyWay()
+updatePollen()
 
 setInterval(updateDateTime, 1000);
 setInterval(updateNewsData, 5 * 60 * 1000)
 setInterval(updateWeather, 5 * 60 * 1000)
 setInterval(updateNewsDisplay, 30 * 1000)
 setInterval(updateMilkyWay, 15 * 60 * 1000)
+setInterval(updatePollen, 60 * 60 * 1000)
