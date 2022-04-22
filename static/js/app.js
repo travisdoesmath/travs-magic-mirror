@@ -128,9 +128,6 @@ function updateWeather() {
         d3.select('#current').select('#current-other').select("#humidity")
             .text(`${data.current.humidity}%`)
 
-        d3.select('#austin-current').text(`Austin: ${Math.round(data.austin.main.temp)}° @ ${Math.round(data.austin.main.humidity)}% ${data.austin.weather[0].description}`)
-            .append('img').attr('src', d => `http://openweathermap.org/img/wn/${data.austin.weather[0].icon}.png`)
-
         let precipColor = x => {
             if (x == 0) return "#444444";
             else if (x < 2) return "#00BB11";
