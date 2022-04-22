@@ -121,9 +121,14 @@ def scrape_pollen():
         return ''
 
     def parse_factor(text):
+        factor_names = {
+            'Indoor Dust, Dander':'Dust/Dander'
+        }
         first_quote_idx = text.find("'")
         second_quote_idx = text[first_quote_idx+1:].find("'") + first_quote_idx + 1
         factor = text[first_quote_idx+1:second_quote_idx]
+        if factor in factor_names:
+            factor = factor_names[factor]
         value = text[second_quote_idx+1:].split(',')[1]
         fill_color = re.search('#[0-9A-F]*', text[text.find('fill-color'):]).group(0)
         return {'factor':factor, 'value':int(value), 'fillColor':fill_color}

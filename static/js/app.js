@@ -401,7 +401,7 @@ function updatePollen() {
     d3.json('/pollen').then(function(data) {
         console.log('pollen data', data)
 
-        let width = 400
+        let width = 350
         let height = 250
 
         let x = d3.scaleLinear()
@@ -417,12 +417,13 @@ function updatePollen() {
         let g = d3.select('#pollen').data([0]).append('g')
             .attr('width', width)
             .attr('height', height)
-            .attr('transform', 'translate(100,0)')
+            .attr('transform', 'translate(120,0)')
 
         let pollenBarChart = g.selectAll('.bar').data(data)
 
         g.append("g")
-        .call(d3.axisLeft(y))
+            .style('font-size', '14px')
+            .call(d3.axisLeft(y))   
             
         pollenBarChart.enter()
             .append('rect')
