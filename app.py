@@ -95,6 +95,18 @@ def pollen():
         with open('pollen.json', 'w') as f:
             json.dump(pollen_data, f)
 
+    # return jsonify([
+    #     {'factor':'Test1', 'value':1000, 'fillColor':'#FFFFFF'},
+    #     {'factor':'Test2', 'value':900, 'fillColor':'#FFFFFF'},
+    #     {'factor':'Test3', 'value':800, 'fillColor':'#FFFFFF'},
+    #     {'factor':'Test4', 'value':700, 'fillColor':'#FFFFFF'},
+    #     {'factor':'Test5', 'value':600, 'fillColor':'#FFFFFF'},
+    #     {'factor':'Test6', 'value':500, 'fillColor':'#FFFFFF'},
+    #     {'factor':'Test7', 'value':400, 'fillColor':'#FFFFFF'},
+    #     {'factor':'Test8', 'value':300, 'fillColor':'#FFFFFF'},
+    #     {'factor':'Test9', 'value':200, 'fillColor':'#FFFFFF'},
+    #     {'factor':'Test10', 'value':100, 'fillColor':'#FFFFFF'},
+    # ])
     return jsonify(pollen_data)
 
 def scrape_pollen():

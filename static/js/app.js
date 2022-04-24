@@ -413,6 +413,7 @@ function updatePollen() {
             .domain(data.map(d => d.factor))
             .padding(0.1)
         
+        d3.select('#pollen').html('')
 
         let g = d3.select('#pollen').data([0]).append('g')
             .attr('width', width)
@@ -423,7 +424,8 @@ function updatePollen() {
 
         g.append("g")
             .style('font-size', '14px')
-            .call(d3.axisLeft(y))   
+            .call(d3.axisLeft(y))
+            .call(g => g.select(".domain").remove())
             
         pollenBarChart.enter()
             .append('rect')
@@ -449,4 +451,4 @@ setInterval(updateNewsData, 5 * 60 * 1000)
 setInterval(updateWeather, 5 * 60 * 1000)
 setInterval(updateNewsDisplay, 30 * 1000)
 setInterval(updateMilkyWay, 15 * 60 * 1000)
-setInterval(updatePollen, 60 * 60 * 1000)
+setInterval(updatePollen, 15 * 60 * 1000)
