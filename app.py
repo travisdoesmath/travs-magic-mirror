@@ -28,7 +28,7 @@ def news():
             return response
     else:
 
-        delta = timedelta(days=1)
+        delta = timedelta(minutes=10)
         try:
             cutoff = datetime.utcnow() - delta
             mtime = datetime.utcfromtimestamp(os.path.getmtime('pollen.json'))

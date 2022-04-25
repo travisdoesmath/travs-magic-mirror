@@ -447,7 +447,7 @@ updateMilkyWay()
 updatePollen()
 
 setInterval(updateDateTime, 1000);
-setInterval(updateNewsData, 5 * 60 * 1000)
+setInterval(updateNewsData, 15 * 60 * 1000)
 setInterval(updateWeather, 5 * 60 * 1000)
 setInterval(updateNewsDisplay, 30 * 1000)
 setInterval(updateMilkyWay, 15 * 60 * 1000)
