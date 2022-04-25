@@ -78,7 +78,7 @@ def weather():
 
 @app.route('/pollen')
 def pollen():
-    delta = timedelta(days=1)
+    delta = timedelta(hours=6)
     try:
         cutoff = datetime.utcnow() - delta
         mtime = datetime.utcfromtimestamp(os.path.getmtime('pollen.json'))
