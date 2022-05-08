@@ -121,6 +121,7 @@ function updateWeather() {
             .attr('fill', '#222')
 
         d3.select('#current-temperature').text(`${Math.round(data.current.temp)}°`)
+        d3.select('#current-feels-like').text(`${Math.round(data.current.feels_like)}°`)
 
         d3.select('#current').select('#current-other').select("img")
             .attr('src', `http://openweathermap.org/img/wn/${data.current.weather[0].icon}.png`)

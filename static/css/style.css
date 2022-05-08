@@ -113,10 +113,17 @@ h1 {
 }
 
 #current-temperature {
-    font-size: 50px;
+    font-size: 46px;
     position: absolute;
-    top: 32px;
-    left: 42px;
+    top: 24px;
+    left: 48px;
+}
+
+#current-feels-like {
+    font-size: 17px;
+    position: absolute;
+    top: 62px;
+    left: 63px;
 }
 
 #current-other {
