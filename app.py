@@ -31,7 +31,7 @@ def news():
         delta = timedelta(minutes=10)
         try:
             cutoff = datetime.utcnow() - delta
-            mtime = datetime.utcfromtimestamp(os.path.getmtime('pollen.json'))
+            mtime = datetime.utcfromtimestamp(os.path.getmtime('news.json'))
             if mtime < cutoff:
                 try:
                     news_data = requests.get(f'https://newsapi.org/v2/top-headlines?country=us&apiKey={news_api_key}').json()
