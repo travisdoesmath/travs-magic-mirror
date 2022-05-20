@@ -35,7 +35,7 @@ def news():
             if mtime < cutoff:
                 try:
                     news_data = requests.get(f'https://newsapi.org/v2/top-headlines?country=us&apiKey={news_api_key}').json()
-                    if news_data['code'] == 'rateLimited':
+                    if news_data.get('code', '') == 'rateLimited':
                         with open('news.json', 'r') as f:
                             news_data = json.load(f)
 
