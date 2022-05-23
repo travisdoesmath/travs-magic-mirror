@@ -155,7 +155,23 @@ function updateWeather() {
 
         let tempColor = d3.scaleQuantize()
             .domain([-10,110])
-            .range(['#ad3e9b','#f06188','#512e4f','#5a3f87','#075ead','#5485ba','#07575e','#317c49','#ea9d20','#f47946','#b10821','#611a24'])
+            .range([
+                '#808',
+                '#407',
+                '#227',
+                '#15a',
+                '#07b',
+                '#158',
+                '#044',
+                '#075',
+                '#590',
+                '#b90',
+                '#c60',
+                '#b30',
+                '#700',
+                '#400'
+
+            ])
 
         let hourlyForecast = d3.select('#hourlyForecast').selectAll('.temp').data(data.hourly)
 
