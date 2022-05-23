@@ -153,6 +153,16 @@ function updateWeather() {
             .style('fill', d => d.color)
             .attr('transform', 'translate(75,75)')
 
+        let tempColor = d3.scaleQuantize()
+            .domain([-10,110])
+            .range(['#ad3e9b','#f06188','#512e4f','#5a3f87','#075ead','#5485ba','#07575e','#317c49','#ea9d20','#f47946','#b10821','#611a24'])
+
+        let hourlyForecast = d3.select('#hourlyForecast').selectAll('.temp').data(data.hourly)
+
+        hourlyForecast.enter().append('div')
+            .attr('class', 'temp')
+            .style('background-color', d => tempColor(d.temp))
+
         let forecasts = d3.select('#forecast').selectAll('.forecast').data(data.daily.slice(0, 3))
 
         forecasts.enter().append('p')
@@ -185,7 +195,7 @@ function updateMilkyWay() {
     let startTime = new Date()
     startTime.setMinutes(Math.floor(startTime.getMinutes() / 15)*15, 0)
     let endTime = new Date()
-    endTime.setHours(12, 0, 0)
+    //endTime.setHours(12, 0, 0)
     endTime.setDate(endTime.getDate() + 1)
 
     sunTimes = [yesterday, today, tomorrow].map(x => SunCalc.getTimes(x, latitude, longitude))
