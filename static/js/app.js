@@ -173,6 +173,8 @@ function updateWeather() {
 
             ])
 
+        d3.select('#hourlyForecast').selectAll('.temp').remove()
+
         let hourlyForecast = d3.select('#hourlyForecast').selectAll('.temp').data(data.hourly)
 
         hourlyForecast.enter().append('div')
