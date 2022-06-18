@@ -181,7 +181,7 @@ function updateWeather() {
             .attr('class', 'temp')
             .style('background-color', d => tempColor(d.temp))
 
-        let forecasts = d3.select('#forecast').selectAll('.forecast').data(data.daily.slice(0, 3))
+        let forecasts = d3.select('#forecast').selectAll('.forecast').data(data.daily.slice(0, 5))
 
         forecasts.enter().append('p')
             .attr('class', 'forecast')
