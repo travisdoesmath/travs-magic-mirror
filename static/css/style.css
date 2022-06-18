@@ -69,8 +69,9 @@ h1 {
 */
 
 #news img {
-    width: 100%;
-    float: left;
+    /* width: 100%; */
+    /* float: left; */
+    max-height: 100px;
     margin: 0 15px 15px 0;
 }
 
