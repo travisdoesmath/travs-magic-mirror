@@ -8,6 +8,12 @@ app = Flask(__name__)
 def index():
     return render_template('monitor.html')
 
+
+@app.route('/chromium')
+def chromium():
+    chromium_console = requests.get('localhost:9222')
+    return chromium_console.text
+
 if __name__ == "__main__":
     debug = True
     app.run(debug=True)
