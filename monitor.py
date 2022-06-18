@@ -11,7 +11,7 @@ def index():
 
 @app.route('/chromium')
 def chromium():
-    chromium_console = requests.get('localhost:9222')
+    chromium_console = requests.get('http://localhost:9222')
     return chromium_console.text
 
 if __name__ == "__main__":
