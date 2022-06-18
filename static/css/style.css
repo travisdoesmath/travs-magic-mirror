@@ -88,7 +88,7 @@ h1 {
 #pollen {
     position: absolute;
     top: 325px;
-    width: 480px;
+    width: 200px;
     height: 250px;
 }
 
@@ -167,7 +167,7 @@ h1 {
 }
 
 p.forecast:last-child>span {
-    background: -webkit-linear-gradient(rgba(255,255,255,100%), rgba(0,0,0,0%));
+    background: -webkit-linear-gradient(rgba(255,255,255,100%), rgba(255,255,255,80%), rgba(0,0,0,0%));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }

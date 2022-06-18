@@ -78,7 +78,7 @@ def weather():
 
 @app.route('/pollen')
 def pollen():
-    delta = timedelta(hours=6)
+    delta = timedelta(hours=1)
     try:
         cutoff = datetime.utcnow() - delta
         mtime = datetime.utcfromtimestamp(os.path.getmtime('pollen.json'))
@@ -145,13 +145,17 @@ def scrape_pollen():
         fill_color = re.search('#[0-9A-F]*', text[text.find('fill-color'):]).group(0)
         return {'factor':factor, 'value':int(value), 'fillColor':fill_color}
 
-    response = requests.get('https://austinpollen.com/')
-    pattern = r'(?<=<script defer>)(.*)(?=</script>)'
-    script_text = re.findall(pattern, response.text, flags=re.DOTALL)[0]
-    pattern = r'(?<=function drawChartindex\(\))(.*)(?<=arrayToDataTable\()(.*)'
-    text = find_json_text(re.findall(pattern, script_text, flags=re.DOTALL)[0][0]).split('\n')
+    response_index = requests.get('https://austinpollen.com/')
+    response_usualsuspects = requests.get('https://austinpollen.com/theusualsuspects.html')
+    script_pattern = r'(?<=<script defer>)(.*)(?=</script>)'
+    script_text_index = re.findall(script_pattern, response_index.text, flags=re.DOTALL)[0]
+    script_text_usualsuspects = re.findall(script_pattern, response_usualsuspects.text, flags=re.DOTALL)[0]
+    pattern_index = r'(?<=function drawChartindex\(\))(.*)(?<=arrayToDataTable\()(.*)'
+    pattern_usualsuspects = r'(?<=function drawCharttheusualsuspects\(\))(.*)(?<=arrayToDataTable\()(.*)'
+    text_index = find_json_text(re.findall(pattern_index, script_text_index, flags=re.DOTALL)[0][0]).split('\n')
+    text_usualsuspects = find_json_text(re.findall(pattern_usualsuspects, script_text_usualsuspects, flags=re.DOTALL)[0][0]).split('\n')
 
-    return [parse_factor(x) for x in text[1:] if x.startswith('            [') and not x.startswith("            ['Factor'")]
+    return [parse_factor(x) for x in text_index[1:] if x.startswith('            [\'Indoor Dust, Dander') and not x.startswith("            ['Factor'")] + [parse_factor(x) for x in text_usualsuspects[1:] if x.startswith('            [') and not x.startswith("            ['Factor'")]
 
 
 if __name__ == "__main__":

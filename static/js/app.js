@@ -452,8 +452,8 @@ function updatePollen() {
         let pollenBarChart = g.selectAll('.bar').data(data)
 
         g.append("g")
-            .style('font-size', '14px')
-            .call(d3.axisLeft(y))
+            .style('font-size', '18px')
+            .call(d3.axisLeft(y).tickSize(0).tickPadding(10))
             .call(g => g.select(".domain").remove())
             
         pollenBarChart.enter()
@@ -462,9 +462,18 @@ function updatePollen() {
             .merge(pollenBarChart)
             .attr('x', x(0))
             .attr('y', d => y(d.factor))
-            .attr('width', d => x(d.value))
+            // .attr('width', d => x(d.value))
+            .attr('width', d => 55)
             .attr('height', y.bandwidth())
             .attr('fill', d => d.fillColor)
+        
+        pollenBarChart.enter()
+            .append('text')
+            .text(d => d.value)
+            .attr('x', x(0)+5)
+            .attr('y', d => y(d.factor) + 25)
+            .attr('fill', d => d3.color(d.fillColor).darker(2))
+            .style('font-weight', 600)
         
     })
 }
