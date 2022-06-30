@@ -181,7 +181,7 @@ function updateWeather() {
             .attr('class', 'temp')
             .style('background-color', d => tempColor(d.temp))
 
-        let forecasts = d3.select('#forecast').selectAll('.forecast').data(data.daily.slice(0, 5))
+        let forecasts = d3.select('#forecast').selectAll('.forecast').data(data.daily.slice(0, 3))
 
         forecasts.enter().append('p')
             .attr('class', 'forecast')
@@ -478,11 +478,21 @@ function updatePollen() {
     })
 }
 
+function updateTraffic() {
+    d3.json('/traffic').then(d => {
+        let traffic = d3.select('#traffic')
+        traffic.html('')
+        traffic.append('p').text(`Time to work: ${d.work} mins`)
+        traffic.append('p').text(`Time to Arwen's: ${d.arwen} mins`)
+    })
+}
+
 updateDateTime()
 updateNewsData().then(updateNewsDisplay)
 updateWeather()
 updateMilkyWay()
 updatePollen()
+updateTraffic()
 
 setInterval(updateDateTime, 1000);
 setInterval(updateNewsData, 15 * 60 * 1000)
@@ -490,3 +500,4 @@ setInterval(updateWeather, 5 * 60 * 1000)
 setInterval(updateNewsDisplay, 30 * 1000)
 setInterval(updateMilkyWay, 15 * 60 * 1000)
 setInterval(updatePollen, 15 * 60 * 1000)
+setInterval(updateTraffic, 1 * 60 * 1000)

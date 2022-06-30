@@ -55,7 +55,7 @@ h1 {
 
 #news {
     position: absolute;
-    top: 540px;
+    top: 450px;
     left: 200px;
     font-size:20px;
     /* opacity: 0; */
@@ -79,6 +79,11 @@ h1 {
     margin-top:5px;
 }
 
+#traffic {
+    position: absolute;
+    top: 450px;
+    left: 200px;
+}
 
 
 #news img::before {
@@ -89,14 +94,14 @@ h1 {
 
 #pollen {
     position: absolute;
-    top: 540px;
+    top: 450px;
     width: 200px;
     height: 250px;
 }
 
 #milky-way {
     position: absolute;
-    top: 180px;
+    top: 170px;
 }
 
 #weather {
@@ -147,7 +152,7 @@ h1 {
 
 #forecast {
     position:absolute;
-    top: 290px;
+    top: 280px;
     width: 100%;
 }
 

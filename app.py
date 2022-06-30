@@ -1,8 +1,10 @@
 from flask import Flask, render_template, jsonify
 import requests
 import json
+import math
 import os
 import re
+import urllib
 from collections import defaultdict
 from datetime import datetime, timedelta
 
@@ -10,6 +12,7 @@ debug = False
 
 news_api_key = os.environ['NEWS_API_KEY']
 owm_api_key = os.environ['OWM_API_KEY']
+bing_maps_key = os.environ['BING_MAPS_KEY']
 lat = os.environ['MY_LATITUDE']
 lng = os.environ['MY_LONGITUDE']
 
@@ -18,6 +21,28 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/traffic')
+def traffic():
+    home_address = "8519 Cahill Dr, Austin, TX 78729"
+    work_address = "3429 Executive Center Dr, Austin, TX"
+    arwen_address = "134 World of Tennis Sq, Lakeway, TX"
+    base_url = "https://dev.virtualearth.net/REST/V1/Routes/Driving?"
+
+    params = {
+        'wp.0':home_address,
+        'wp.1':work_address,
+        'key':bing_maps_key
+    }
+    response = requests.get(base_url + urllib.parse.urlencode(params))
+    work_travel_time = response.json()['resourceSets'][0]['resources'][0]['travelDurationTraffic']
+    params['wp.1'] = arwen_address
+    response = requests.get(base_url + urllib.parse.urlencode(params))
+    arwen_travel_time = response.json()['resourceSets'][0]['resources'][0]['travelDurationTraffic']
+    return {
+        'work': math.ceil(work_travel_time/60),
+        'arwen': math.ceil(arwen_travel_time/60),
+    }
 
 @app.route('/news')
 def news():
