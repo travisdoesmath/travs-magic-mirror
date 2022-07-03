@@ -13,8 +13,8 @@ def cached_request(url, ttl):
     collection = db.collection
     
     cache_result = collection.find_one({
+        'url': url,
         'timestamp':{
-            'url': url,
             '$gt': datetime.datetime.now(timezone.utc) - datetime.timedelta(seconds=ttl)
         }
     })
