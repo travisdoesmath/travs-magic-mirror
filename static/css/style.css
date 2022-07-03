@@ -165,6 +165,7 @@ h1 {
     width: 18px;
     float: left;
     border: solid 1px black;    
+    overflow: hidden;
 }
 
 .forecast-description {

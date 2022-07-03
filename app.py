@@ -7,6 +7,7 @@ import re
 import urllib
 from collections import defaultdict
 from datetime import datetime, timedelta
+from my_functions import cached_request
 
 debug = False
 
@@ -34,14 +35,29 @@ def traffic():
         'wp.1':work_address,
         'key':bing_maps_key
     }
-    response = requests.get(base_url + urllib.parse.urlencode(params))
-    work_travel_time = response.json()['resourceSets'][0]['resources'][0]['travelDurationTraffic']
-    params['wp.1'] = arwen_address
-    response = requests.get(base_url + urllib.parse.urlencode(params))
-    arwen_travel_time = response.json()['resourceSets'][0]['resources'][0]['travelDurationTraffic']
+
+    urls = {
+        'home_to_work': base_url + urllib.parse.urlencode({'wp.0':home_address, 'wp.1':work_address, 'key':bing_maps_key}),
+        'work_to_home': base_url + urllib.parse.urlencode({'wp.0':work_address, 'wp.1':home_address, 'key':bing_maps_key}),
+
+        'home_to_arwen': base_url + urllib.parse.urlencode({'wp.0':home_address, 'wp.1':arwen_address, 'key':bing_maps_key}),
+        'arwen_to_home': base_url + urllib.parse.urlencode({'wp.0':arwen_address, 'wp.1':home_address, 'key':bing_maps_key}),
+
+        'arwen_to_work': base_url + urllib.parse.urlencode({'wp.0':arwen_address, 'wp.1':work_address, 'key':bing_maps_key}),
+        'work_to_arwen': base_url + urllib.parse.urlencode({'wp.0':work_address, 'wp.1':arwen_address, 'key':bing_maps_key}),
+    }
+        
+    
+    response = {key:cached_request(urls[key], 600) for key in urls}
+    #debug = response['home_to_work']
+    #print(debug)
+    #print(json.loads(debug))
+    #print(json.loads(debug['content']))
+    time_to_work = math.ceil(json.loads(response['home_to_work']['content'])['resourceSets'][0]['resources'][0]['travelDurationTraffic']/60)
+    time_to_arwen = math.ceil(json.loads(response['home_to_arwen']['content'])['resourceSets'][0]['resources'][0]['travelDurationTraffic']/60)
     return {
-        'work': math.ceil(work_travel_time/60),
-        'arwen': math.ceil(arwen_travel_time/60),
+        'work': time_to_work,
+        'arwen': time_to_arwen,
     }
 
 @app.route('/news')
@@ -89,17 +105,20 @@ def news():
 
 @app.route('/weather')
 def weather():
-    if debug:
-        print('weather.json loaded for debugging')
-        with open('weather.json', 'r') as f:
-            response = json.load(f)
-            return response
-    else:
-        try:
-            response = requests.get(f'https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lng}&appid={owm_api_key}&units=imperial').json()
-            return response
-        except:
-            return "an error occured"
+    response = cached_request(f'https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lng}&appid={owm_api_key}&units=imperial', 300)
+    return json.loads(response['content'])
+
+    # if debug:
+    #     print('weather.json loaded for debugging')
+    #     with open('weather.json', 'r') as f:
+    #         response = json.load(f)
+    #         return response
+    # else:
+    #     try:
+    #         response = requests.get(f'https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lng}&appid={owm_api_key}&units=imperial').json()
+    #         return response
+    #     except:
+    #         return "an error occured"
 
 @app.route('/pollen')
 def pollen():
