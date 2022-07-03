@@ -1,10 +1,14 @@
-from pymongo import MongoClient
+import pymongo
 import requests
 from datetime import timezone
 import datetime
+import os
+
+mongo_db_password = os.environ['MONGO_DB_PW']
 
 def cached_request(url, ttl):
-    client = MongoClient()
+    client = pymongo.MongoClient(f"mongodb+srv://travis:{mongo_db_password}@cluster0.ofivo.mongodb.net/?retryWrites=true&w=majority")
+
     db = client.requests
     collection = db.collection
     
@@ -17,16 +21,15 @@ def cached_request(url, ttl):
     if cache_result:
         return cache_result
     else:
-        return request_and_store(url)
+        return request_and_store(url, client)
 
-def request_and_store(url):
+def request_and_store(url, client):
     dt = datetime.datetime.now(timezone.utc)
     response_object = {
         'url': url,
         'timestamp': dt
     }
 
-    client = MongoClient()
     db = client.requests
     collection = db.collection
 
