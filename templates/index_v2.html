@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        <meta charset="utf-8">
+        <title>Trav's Magic Mirror</title>
+        <link rel="stylesheet" type="text/css" href="/static/css/style_v2.css">
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.16.0/d3.min.js"></script> -->
+        <script src="/static/js/d3.min.js"></script>
+        <script src="/static/js/suncalc.js"></script>
+    </head>
+    <body>
+        <div id="main">
+            <div id="header">
+                <div id="date"></div>
+                <div id="time"></div>
+                <div id="sunrise-sunset"></div>
+                <div id="weather">
+                    <svg id="minute-forecast"></svg>
+                    <div id="current">
+                        <h1 id="current-temperature"></h1>
+                        <h2 id="current-feels-like"></h2>
+                        <div id="current-other">
+                            <img></img><span id="humidity"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="forecast">
+                <div id="hourlyForecast"></div>
+            </div>
+            <svg id="pollen"></svg>
+            <div id="news">
+                <img id="news-image" onerror='this.src = "/static/img/news.png"'>
+                <p id="news-title"></p>
+            </div>
+            <div id="milky-way">
+                <svg></svg>
+            </div>
+            <div id="traffic"></div>
+        </div>
+        <script src="/static/js/app_v2.js"></script>
+    </body>
+</html>

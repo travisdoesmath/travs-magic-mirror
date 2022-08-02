@@ -1,0 +1,193 @@
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    background-color: black;
+    color: white;
+    padding: 0;
+    margin: 10px;
+    font-size: 26px;
+    position: absolute;
+}
+
+#main {
+    height: 800px;
+    width: 480px;
+    max-height: 800px;
+    overflow: hidden;
+    /* border: 1px dashed white; */
+}
+
+p {
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-size: 72px;
+    margin: 0;
+    padding: 0;
+}
+
+#date {
+    font-size: 36px;
+}
+
+#sunrise-sunset {
+    position: relative;
+    top: -16px;
+    font-size: 24px;
+}
+
+#sunrise-sunset > img {
+    position: relative;
+    top: 14px;
+}
+
+#sunrise-sunset > svg {
+    position: relative;
+    top: 7px;
+    margin-left: 12px;
+}
+
+
+#time {
+    font-size: 64px;
+}
+
+#news {
+    position: absolute;
+    top: 400px;
+    left: 700px;
+    font-size:20px;
+    /* opacity: 0; */
+    /* transition: opacity 750ms ease-in-out; */
+}
+
+/* #news.is-visible {
+    opacity: 1;
+    transition: opacity 750ms ease-in-out;
+} 
+*/
+
+#news img {
+    /* width: 100%; */
+    /* float: left; */
+    max-height: 100px;
+    margin: 0 15px 15px 0;
+}
+
+#news>p {
+    margin-top:5px;
+}
+
+#traffic {
+    position: absolute;
+    top: 710px;
+}
+
+
+#news img::before {
+    width: 165px;
+    height: 100px;
+    background-image: url('/static/img/news.png');
+}
+
+#pollen {
+    position: absolute;
+    top: 400px;
+    left: 480px;
+    width: 200px;
+    height: 250px;
+}
+
+#milky-way {
+    position: absolute;
+    top: 170px;
+}
+
+#weather {
+    position: absolute;
+    display: flex;
+    right: 0px;
+    top: 0px;
+    height: 150px;
+    width: 150px;
+    align-items: center;
+    justify-content: center;
+}
+
+#minute-forecast {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 150px;
+    height: 150px;
+}
+
+#current-temperature {
+    font-size: 46px;
+    position: absolute;
+    top: 24px;
+    left: 48px;
+}
+
+#current-feels-like {
+    font-size: 17px;
+    position: absolute;
+    top: 62px;
+    left: 63px;
+}
+
+#current-other {
+    position: absolute;
+    bottom: 10px;
+    left:20px;
+}
+
+#humidity {
+    position: absolute;
+    bottom: 17px;
+    font-size:24px;
+    color: #FFF;
+}
+
+#forecast {
+    position:absolute;
+    top: 280px;
+    width: 100%;
+}
+
+#hourlyForecast {
+    height: 50px;
+    width: 940px;
+    margin-bottom: 5px;
+}
+
+#hourlyForecast>.temp {
+    height: 50px;
+    width: 36px;
+    float: left;
+    border: solid 1px black;    
+    overflow: hidden;
+}
+
+.forecast-description {
+    position: absolute;
+    left: 120px;
+}
+
+p.forecast:last-child>span {
+    background: -webkit-linear-gradient(rgba(255,255,255,100%), rgba(255,255,255,80%), rgba(0,0,0,0%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.weekday {
+    position: absolute;
+}
+
+.forecast>img {
+    position: relative; 
+    left: 85px;
+    top: 2px;
+}
+

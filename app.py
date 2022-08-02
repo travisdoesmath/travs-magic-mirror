@@ -23,6 +23,10 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
+@app.route('/v2')
+def index_v2():
+    return render_template('index_v2.html')
+
 @app.route('/traffic')
 def traffic():
     home_address = "8519 Cahill Dr, Austin, TX 78729"
